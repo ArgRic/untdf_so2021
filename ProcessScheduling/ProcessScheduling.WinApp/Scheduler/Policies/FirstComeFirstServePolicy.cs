@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProcessScheduling.WinApp.Scheduler.Policies
 {
-    public class FCFSPolicy : IPolicy
+    public class FirstComeFirstServePolicy : IPolicy
     {
     }
 }

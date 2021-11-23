@@ -19,16 +19,20 @@
 
         public SchedulerResult Work()
         {
-            var result = new SchedulerResult { 
-                EntryResults = new List<ProcessEntryResult>(),
+            var result = new SchedulerResult { EntryResults = new List<ProcessEntryResult>(),ResultMessage = String.Empty };
 
-            };
-
-            
+            foreach (var processEntry in ProcessEntries)
+            {
+                ProcessEntryResult entryResult = this.HandleProcessEntry(processEntry, this.ProcessSchedulerPolicy, this.ProcessSchedulerConfig);
+                result.EntryResults.Append(entryResult);
+            }
 
             return result;
         }
 
-
+        private ProcessEntryResult HandleProcessEntry(ProcessEntry processEntry, IPolicy processSchedulerPolicy, ProcessSchedulerConfig processSchedulerConfig)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

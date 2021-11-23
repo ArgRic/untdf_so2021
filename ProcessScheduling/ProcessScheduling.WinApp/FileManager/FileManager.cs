@@ -6,11 +6,12 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class FileManager
+    public class FileReader
     {
-        public FileManager()
+        public FileReader()
         {
         }
+
 
 
     }
