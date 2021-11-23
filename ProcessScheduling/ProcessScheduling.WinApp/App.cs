@@ -8,8 +8,14 @@ namespace ProcessScheduling.WinApp
 
     public partial class App : Form
     {
-        public App()
+        readonly AppService appService;
+
+        public App(AppService appService)
         {
+            this.appService = appService ?? throw new ArgumentNullException(nameof(appService));
+            this.appService.InitializeEnviroment();
+
+            // UI Init
             InitializeComponent();
             policySelect.DataSource = Enum.GetNames(typeof(PolicyEnum));
         }

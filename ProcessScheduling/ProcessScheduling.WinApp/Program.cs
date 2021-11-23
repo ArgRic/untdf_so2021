@@ -9,7 +9,7 @@ namespace ProcessScheduling.WinApp
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new App());
+            Application.Run(new App(new AppService()));
         }
     }
 }
