@@ -13,6 +13,12 @@
         public void InitializeEnviroment()
         {
             this.CreateMissingFolders();
+            this.CreateExampleFile();
+        }
+
+        private void CreateExampleFile()
+        {
+            throw new NotImplementedException();
         }
 
         private void CreateMissingFolders()
