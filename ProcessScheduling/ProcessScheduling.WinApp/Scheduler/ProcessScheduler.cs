@@ -45,6 +45,7 @@
                 {
                     currentEvent.ProcessSnapshots.Add(new ProcessSnapshot {
                         ProcessEntryId = entry.Id,
+                        ProcessEntryName = entry.Name,
                         ProcessEntryState = entry.ProcessState
                     });
 

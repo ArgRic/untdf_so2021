@@ -30,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flpApp = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
@@ -50,12 +51,14 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.loadFileButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.resetButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.statusLabel = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.logPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.outputListBox = new System.Windows.Forms.ListBox();
+            this.dgvOutput = new System.Windows.Forms.DataGridView();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.statusLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1.SuspendLayout();
             this.flpApp.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
@@ -69,25 +72,40 @@
             ((System.ComponentModel.ISupportInitialize)(this.tipUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.logPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOutput)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.flpApp, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox4, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(769, 420);
+            this.tableLayoutPanel1.TabIndex = 6;
             // 
             // flpApp
             // 
             this.flpApp.Controls.Add(this.groupBox1);
             this.flpApp.Controls.Add(this.groupBox2);
             this.flpApp.Controls.Add(this.groupBox3);
-            this.flpApp.Controls.Add(this.groupBox4);
             this.flpApp.Controls.Add(this.groupBox5);
             this.flpApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpApp.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpApp.Location = new System.Drawing.Point(0, 0);
+            this.flpApp.Location = new System.Drawing.Point(2, 2);
             this.flpApp.Margin = new System.Windows.Forms.Padding(2);
             this.flpApp.Name = "flpApp";
-            this.flpApp.Size = new System.Drawing.Size(769, 322);
-            this.flpApp.TabIndex = 0;
+            this.flpApp.Size = new System.Drawing.Size(765, 316);
+            this.flpApp.TabIndex = 1;
             // 
             // groupBox1
             // 
@@ -266,19 +284,29 @@
             this.loadFileButton.TabIndex = 0;
             this.loadFileButton.Text = "Validar Archivo";
             this.loadFileButton.UseVisualStyleBackColor = true;
-            this.loadFileButton.Click += new System.EventHandler(this.loadFileButton_Click);
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.resetButton);
             this.groupBox3.Controls.Add(this.startButton);
             this.groupBox3.Location = new System.Drawing.Point(2, 201);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(261, 54);
+            this.groupBox3.Size = new System.Drawing.Size(261, 112);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Emulador";
+            // 
+            // resetButton
+            // 
+            this.resetButton.Enabled = false;
+            this.resetButton.Location = new System.Drawing.Point(82, 66);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(106, 23);
+            this.resetButton.TabIndex = 1;
+            this.resetButton.Text = "Reiniciar";
+            this.resetButton.UseVisualStyleBackColor = true;
             // 
             // startButton
             // 
@@ -289,16 +317,44 @@
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Iniciar";
             this.startButton.UseVisualStyleBackColor = true;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.logPanel);
+            this.groupBox5.Location = new System.Drawing.Point(268, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(495, 310);
+            this.groupBox5.TabIndex = 5;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Output";
+            // 
+            // logPanel
+            // 
+            this.logPanel.Controls.Add(this.dgvOutput);
+            this.logPanel.Location = new System.Drawing.Point(3, 19);
+            this.logPanel.Name = "logPanel";
+            this.logPanel.Size = new System.Drawing.Size(489, 291);
+            this.logPanel.TabIndex = 0;
+            // 
+            // dgvOutput
+            // 
+            this.dgvOutput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOutput.Location = new System.Drawing.Point(3, 3);
+            this.dgvOutput.MultiSelect = false;
+            this.dgvOutput.Name = "dgvOutput";
+            this.dgvOutput.ReadOnly = true;
+            this.dgvOutput.RowTemplate.Height = 25;
+            this.dgvOutput.Size = new System.Drawing.Size(240, 150);
+            this.dgvOutput.TabIndex = 0;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.statusLabel);
-            this.groupBox4.Location = new System.Drawing.Point(2, 259);
+            this.groupBox4.Location = new System.Drawing.Point(2, 322);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox4.Size = new System.Drawing.Size(261, 54);
+            this.groupBox4.Size = new System.Drawing.Size(765, 87);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Status";
@@ -315,44 +371,18 @@
             this.statusLabel.Text = "Status";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.logPanel);
-            this.groupBox5.Location = new System.Drawing.Point(268, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(495, 310);
-            this.groupBox5.TabIndex = 5;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Output";
-            // 
-            // logPanel
-            // 
-            this.logPanel.Controls.Add(this.outputListBox);
-            this.logPanel.Location = new System.Drawing.Point(3, 19);
-            this.logPanel.Name = "logPanel";
-            this.logPanel.Size = new System.Drawing.Size(489, 291);
-            this.logPanel.TabIndex = 0;
-            // 
-            // outputListBox
-            // 
-            this.outputListBox.FormattingEnabled = true;
-            this.outputListBox.ItemHeight = 15;
-            this.outputListBox.Location = new System.Drawing.Point(3, 3);
-            this.outputListBox.Name = "outputListBox";
-            this.outputListBox.Size = new System.Drawing.Size(483, 274);
-            this.outputListBox.TabIndex = 1;
-            // 
             // App
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(769, 322);
-            this.Controls.Add(this.flpApp);
+            this.ClientSize = new System.Drawing.Size(769, 420);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "App";
             this.Text = "ProcessScheduler - Mansilla Ricardo";
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.flpApp.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
@@ -371,41 +401,44 @@
             ((System.ComponentModel.ISupportInitialize)(this.tipUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.logPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOutput)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        private TableLayoutPanel tableLayoutPanel1;
         private FlowLayoutPanel flpApp;
         private GroupBox groupBox1;
-        private GroupBox groupBox2;
-        private Label tipLabel;
-        private NumericUpDown tipUpDown;
-        private FlowLayoutPanel tipPanel;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private Label tfpLabel;
-        private NumericUpDown tfpUpDown;
-        private FlowLayoutPanel flowLayoutPanel2;
-        private Label label1;
-        private NumericUpDown tcpUpDown;
-        private FlowLayoutPanel flowLayoutPanel3;
-        private Label quantumLabel;
-        private NumericUpDown quantumUpDown;
         private FlowLayoutPanel flowLayoutPanel4;
         private Label label2;
         private ComboBox policySelect;
+        private FlowLayoutPanel flowLayoutPanel3;
+        private Label quantumLabel;
+        private NumericUpDown quantumUpDown;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private Label label1;
+        private NumericUpDown tcpUpDown;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Label tfpLabel;
+        private NumericUpDown tfpUpDown;
+        private FlowLayoutPanel tipPanel;
+        private Label tipLabel;
+        private NumericUpDown tipUpDown;
+        private GroupBox groupBox2;
         private Button loadFileButton;
         private GroupBox groupBox3;
+        private Button resetButton;
         private Button startButton;
-        private GroupBox groupBox4;
-        private Label statusLabel;
         private GroupBox groupBox5;
         private FlowLayoutPanel logPanel;
-        private ListBox outputListBox;
+        private GroupBox groupBox4;
+        private Label statusLabel;
+        private DataGridView dgvOutput;
     }
 }

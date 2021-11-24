@@ -6,6 +6,8 @@ namespace ProcessScheduling.WinApp
     using ProcessScheduling.WinApp.Scheduler.Policies;
     using System;
     using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
     using System.Windows.Forms;
 
     public partial class App : Form
@@ -27,12 +29,60 @@ namespace ProcessScheduling.WinApp
             var entries = new List<ProcessEntry>();
             var scheduler = new ProcessScheduler(this.PolicyFactory(config.Policy), entries, config);
             var result = scheduler.Work();
-            this.LoadSchedulerResult(result);
+            this.SetDataTable(result);
         }
 
-        private void LoadSchedulerResult(SchedulerResult result)
+        private void SetDataTable(SchedulerResult result)
         {
-            throw new NotImplementedException();
+            dgvOutput.Visible = false;
+            dgvOutput.DataSource = null;
+            // Event DataTable
+            var dt = new DataTable();
+            dt.Columns.Add("t", typeof(int));
+            foreach (var entryResult in result.EntryResults) 
+            {
+                dt.Columns.Add(entryResult.ProcessEntryName, typeof(string));
+            }
+            dt.Columns.Add("Evento", typeof(string));
+
+            // Filas
+            int time = 0;
+            foreach(var schedulerEvent in result.SchedulerEvents)
+            {
+                time++;
+                var row = dt.NewRow();
+                row["t"] = time;
+                foreach(var shot in schedulerEvent.ProcessSnapshots)
+                { 
+                    row[shot.ProcessEntryName] = shot.ToString();
+                    row[shot.ProcessEntryName] = shot.ToString();
+                }
+                row["Evento"] = schedulerEvent.Message;
+                dt.Rows.Add(row);
+            }
+
+            dgvOutput.DataSource = dt;
+
+            // Pintamos
+            foreach(DataGridViewRow viewRow in dgvOutput.Rows)
+            {
+                foreach (var entryResult in result.EntryResults)
+                {
+                    // Acoplado al override ToString en ProcessSnapshot
+                    Color color;
+                    switch (viewRow.Cells[entryResult.ProcessEntryName].Value.ToString())
+                    {
+                        case "R": color = Color.Green; break;
+                        case "W": color = Color.LightGray; break;
+                        case "L": color = Color.PaleVioletRed; break;
+                        case "C": color = Color.Gray; break;
+                        default: color = Color.White; break;
+                    }
+                    viewRow.Cells[entryResult.ProcessEntryName].Style.BackColor = color;
+                }
+            }
+
+            dgvOutput.Visible = true;
         }
 
         private IPolicy PolicyFactory(PolicyEnum policyEnum)
