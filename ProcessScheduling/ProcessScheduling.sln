@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessScheduling.WinApp", "ProcessScheduling.WinApp\ProcessScheduling.WinApp.csproj", "{FA7A9C6D-371E-4869-9C19-3B0F88E2A35B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessScheduling.Scheduler", "ProcessScheduling.Business\ProcessScheduling.Scheduler.csproj", "{765D722A-B005-4FA1-B2D1-C7FDF217922B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FA7A9C6D-371E-4869-9C19-3B0F88E2A35B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA7A9C6D-371E-4869-9C19-3B0F88E2A35B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA7A9C6D-371E-4869-9C19-3B0F88E2A35B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{765D722A-B005-4FA1-B2D1-C7FDF217922B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{765D722A-B005-4FA1-B2D1-C7FDF217922B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{765D722A-B005-4FA1-B2D1-C7FDF217922B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{765D722A-B005-4FA1-B2D1-C7FDF217922B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

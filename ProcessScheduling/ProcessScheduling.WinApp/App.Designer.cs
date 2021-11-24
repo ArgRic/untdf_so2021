@@ -58,6 +58,7 @@
             this.dgvOutput = new System.Windows.Forms.DataGridView();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.filenameLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.flpApp.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -266,34 +267,36 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.filenameLabel);
             this.groupBox2.Controls.Add(this.loadFileButton);
             this.groupBox2.Location = new System.Drawing.Point(2, 143);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(261, 54);
+            this.groupBox2.Size = new System.Drawing.Size(261, 109);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "File";
             // 
             // loadFileButton
             // 
-            this.loadFileButton.Location = new System.Drawing.Point(82, 21);
+            this.loadFileButton.Location = new System.Drawing.Point(66, 81);
             this.loadFileButton.Name = "loadFileButton";
-            this.loadFileButton.Size = new System.Drawing.Size(106, 23);
+            this.loadFileButton.Size = new System.Drawing.Size(134, 23);
             this.loadFileButton.TabIndex = 0;
-            this.loadFileButton.Text = "Validar Archivo";
+            this.loadFileButton.Text = "Seleccionar Archivo";
             this.loadFileButton.UseVisualStyleBackColor = true;
+            this.loadFileButton.Click += new System.EventHandler(this.loadFileButton_Click);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.resetButton);
             this.groupBox3.Controls.Add(this.startButton);
-            this.groupBox3.Location = new System.Drawing.Point(2, 201);
+            this.groupBox3.Location = new System.Drawing.Point(2, 256);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(261, 112);
+            this.groupBox3.Size = new System.Drawing.Size(261, 51);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Emulador";
@@ -301,7 +304,7 @@
             // resetButton
             // 
             this.resetButton.Enabled = false;
-            this.resetButton.Location = new System.Drawing.Point(82, 66);
+            this.resetButton.Location = new System.Drawing.Point(5, 20);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(106, 23);
             this.resetButton.TabIndex = 1;
@@ -311,7 +314,7 @@
             // startButton
             // 
             this.startButton.Enabled = false;
-            this.startButton.Location = new System.Drawing.Point(82, 21);
+            this.startButton.Location = new System.Drawing.Point(150, 20);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(106, 23);
             this.startButton.TabIndex = 0;
@@ -370,6 +373,14 @@
             this.statusLabel.TabIndex = 2;
             this.statusLabel.Text = "Status";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // filenameLabel
+            // 
+            this.filenameLabel.Location = new System.Drawing.Point(13, 18);
+            this.filenameLabel.Name = "filenameLabel";
+            this.filenameLabel.Size = new System.Drawing.Size(239, 50);
+            this.filenameLabel.TabIndex = 1;
+            this.filenameLabel.Text = "Seleccionar Archivo";
             // 
             // App
             // 
@@ -440,5 +451,6 @@
         private GroupBox groupBox4;
         private Label statusLabel;
         private DataGridView dgvOutput;
+        private Label filenameLabel;
     }
 }

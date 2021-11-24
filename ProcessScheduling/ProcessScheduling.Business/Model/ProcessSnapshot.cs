@@ -1,4 +1,4 @@
-﻿namespace ProcessScheduling.WinApp.Model
+﻿namespace ProcessScheduling.Scheduler.Model
 {
     public class ProcessSnapshot
     {

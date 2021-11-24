@@ -1,6 +1,6 @@
-﻿namespace ProcessScheduling.WinApp.Scheduler
+﻿namespace ProcessScheduling.Scheduler
 {
-    using ProcessScheduling.WinApp.Model;
+    using ProcessScheduling.Scheduler.Model;
 
     public class ProcessSchedulerConfig
     {

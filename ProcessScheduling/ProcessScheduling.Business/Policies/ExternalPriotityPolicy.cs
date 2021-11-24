@@ -1,8 +1,8 @@
-﻿namespace ProcessScheduling.WinApp.Scheduler.Policies
+﻿namespace ProcessScheduling.Scheduler.Policies
 {
     using System;
     using System.Collections.Generic;
-    using ProcessScheduling.WinApp.Model;
+    using ProcessScheduling.Scheduler.Model;
 
     public class ExternalPriotityPolicy : IPolicy
     {

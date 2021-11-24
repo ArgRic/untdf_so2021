@@ -1,10 +1,12 @@
-﻿namespace ProcessScheduling.WinApp.Scheduler
+﻿
+
+namespace ProcessScheduling.Scheduler
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using ProcessScheduling.WinApp.Model;
-    using ProcessScheduling.WinApp.Scheduler.Policies;
+    using ProcessScheduling.Scheduler.Model;
+    using ProcessScheduling.Scheduler.Policies;
 
     public class ProcessScheduler
     {

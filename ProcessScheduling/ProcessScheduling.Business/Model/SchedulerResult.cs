@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProcessScheduling.WinApp.Model
+namespace ProcessScheduling.Scheduler.Model
 {
     public class SchedulerResult
     {

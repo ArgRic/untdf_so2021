@@ -1,14 +1,14 @@
 
 namespace ProcessScheduling.WinApp
 {
-    using ProcessScheduling.WinApp.Model;
-    using ProcessScheduling.WinApp.Scheduler;
-    using ProcessScheduling.WinApp.Scheduler.Policies;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Drawing;
     using System.Windows.Forms;
+    using ProcessScheduling.Scheduler;
+    using ProcessScheduling.Scheduler.Model;
+    using ProcessScheduling.Scheduler.Policies;
 
     public partial class App : Form
     {
@@ -54,7 +54,6 @@ namespace ProcessScheduling.WinApp
                 row["t"] = time;
                 foreach(var shot in schedulerEvent.ProcessSnapshots)
                 { 
-                    row[shot.ProcessEntryName] = shot.ToString();
                     row[shot.ProcessEntryName] = shot.ToString();
                 }
                 row["Evento"] = schedulerEvent.Message;
@@ -124,7 +123,20 @@ namespace ProcessScheduling.WinApp
 
         private void loadFileButton_Click(object sender, EventArgs e)
         {
-
+            using (var fdlg = new OpenFileDialog())
+            {
+                fdlg.Title = "Seleccion de archivo";
+                fdlg.InitialDirectory = @"c:\";
+                fdlg.Filter = "Archivo separado por comas (*.csv)|*.csv|Archivo de texto (*.txt)|*.txt";
+                fdlg.FilterIndex = 0;
+                fdlg.RestoreDirectory = true;
+                DialogResult result = fdlg.ShowDialog();
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fdlg.FileName))
+                {
+                    this.filenameLabel.Text = fdlg.FileName;
+                    this.appService.TryLoadFiles(fdlg.FileName);
+                }
+            }
         }
 
         private void startButton_Click(object sender, EventArgs e)
