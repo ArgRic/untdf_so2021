@@ -1,13 +1,16 @@
 ﻿namespace ProcessScheduling.WinApp.Scheduler
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using ProcessScheduling.WinApp.Model;
     using ProcessScheduling.WinApp.Scheduler.Policies;
 
     public class ProcessScheduler
     {
-        private IEnumerable<ProcessEntry> ProcessEntries;
-        private ProcessSchedulerConfig ProcessSchedulerConfig;
-        private IPolicy ProcessSchedulerPolicy;
+        private readonly IEnumerable<ProcessEntry> ProcessEntries;
+        private readonly ProcessSchedulerConfig ProcessSchedulerConfig;
+        private readonly IPolicy ProcessSchedulerPolicy;
 
         public ProcessScheduler(IPolicy policy, IEnumerable<ProcessEntry> processEntries, ProcessSchedulerConfig config)
         {

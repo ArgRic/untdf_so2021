@@ -4,10 +4,5 @@
     {
         public int ProcessEntryId { get; set; }
         public ProcessStateEnum ProcessEntryState { get; set; }
-
-        public ProcessSnapshot()
-        {
-            ProcessEntryName = string.Empty;
-        }
     }
 }

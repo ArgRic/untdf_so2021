@@ -1,5 +1,7 @@
 ﻿namespace ProcessScheduling.WinApp
 {
+    using System.Windows.Forms;
+
     partial class App
     {
         /// <summary>
@@ -125,6 +127,7 @@
             // 
             // policySelect
             // 
+            this.policySelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.policySelect.FormattingEnabled = true;
             this.policySelect.Location = new System.Drawing.Point(69, 3);
             this.policySelect.Name = "policySelect";

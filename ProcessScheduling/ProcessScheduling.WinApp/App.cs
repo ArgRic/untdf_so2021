@@ -5,6 +5,8 @@ namespace ProcessScheduling.WinApp
     using ProcessScheduling.WinApp.Scheduler;
     using ProcessScheduling.WinApp.Scheduler.Policies;
     using System;
+    using System.Collections.Generic;
+    using System.Windows.Forms;
 
     public partial class App : Form
     {
@@ -25,6 +27,12 @@ namespace ProcessScheduling.WinApp
             var entries = new List<ProcessEntry>();
             var scheduler = new ProcessScheduler(this.PolicyFactory(config.Policy), entries, config);
             var result = scheduler.Work();
+            this.LoadSchedulerResult(result);
+        }
+
+        private void LoadSchedulerResult(SchedulerResult result)
+        {
+            throw new NotImplementedException();
         }
 
         private IPolicy PolicyFactory(PolicyEnum policyEnum)
@@ -38,11 +46,6 @@ namespace ProcessScheduling.WinApp
                 PolicyEnum.ShortestRemainingTime => new ShortestRemainingTimePolicy(),
                 _ => new FirstComeFirstServePolicy(),
             };
-        }
-
-        private void loadFileButton_Click(object sender, EventArgs e)
-        {
-  
         }
 
         private ProcessSchedulerConfig? ReadSchedulerConfig()
@@ -67,6 +70,11 @@ namespace ProcessScheduling.WinApp
         private void ShowError(string message)
         {
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void loadFileButton_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void startButton_Click(object sender, EventArgs e)

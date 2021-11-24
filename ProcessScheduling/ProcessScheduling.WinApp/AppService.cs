@@ -12,8 +12,8 @@
 
         public void InitializeEnviroment()
         {
-            this.CreateMissingFolders();
-            this.CreateExampleFile();
+            //this.CreateMissingFolders();
+            //this.CreateExampleFile();
         }
 
         private void CreateExampleFile()

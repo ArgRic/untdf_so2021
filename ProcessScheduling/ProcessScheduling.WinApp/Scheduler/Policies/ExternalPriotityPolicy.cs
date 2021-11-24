@@ -1,12 +1,9 @@
-﻿using ProcessScheduling.WinApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProcessScheduling.WinApp.Scheduler.Policies
+﻿namespace ProcessScheduling.WinApp.Scheduler.Policies
 {
+    using System;
+    using System.Collections.Generic;
+    using ProcessScheduling.WinApp.Model;
+
     public class ExternalPriotityPolicy : IPolicy
     {
         public bool UpdateProcessEntries(IEnumerable<ProcessEntry> processEntries)
