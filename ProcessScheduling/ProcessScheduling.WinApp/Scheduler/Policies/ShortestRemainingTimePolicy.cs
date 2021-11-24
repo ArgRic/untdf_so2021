@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProcessScheduling.WinApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace ProcessScheduling.WinApp.Scheduler.Policies
 {
     public class ShortestRemainingTimePolicy : IPolicy
     {
+        public bool UpdateProcessEntries(IEnumerable<ProcessEntry> processEntries)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

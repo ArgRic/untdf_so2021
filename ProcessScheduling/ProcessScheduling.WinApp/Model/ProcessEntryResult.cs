@@ -8,8 +8,13 @@ namespace ProcessScheduling.WinApp.Model
 {
     public class ProcessEntryResult
     {
-        public int ReturnTime { get; set; }
-        public int ReturnTimeNormal { get; set; }
+        public int ProcessEntryId { get; set; }
+        public int CpuTime { get; set; }
+        public float CpuTimeRatio { get; set; }
+        public int WaitTime { get; set; }
         public int ReadyTime { get; set; }
+        public int LockTime { get; set; }
+        public float ReturnTimeNormal { get; set; }
+        public int ReturnTime { get; set; }
     }
 }
