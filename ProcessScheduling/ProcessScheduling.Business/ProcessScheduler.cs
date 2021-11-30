@@ -45,12 +45,12 @@ namespace ProcessScheduling.Scheduler
                     currentEvent.ProcessSnapshots.Add(new ProcessSnapshot {
                         ProcessEntryId = pState.ProcessEntry.Id,
                         ProcessEntryName = pState.ProcessEntry.Name,
-                        ProcessEntryState = pState.ProcessEntry.ProcessState
+                        ProcessEntryState = pState.ProcessState
                     });
 
                     this.UpdateEntryResultByProcessEntryState(
                         pState,
-                        pState.ProcessEntry.ProcessState, 
+                        pState.ProcessState, 
                         this.ProcessEntries.Count(), 
                         totalCpuTime);
                 }
@@ -68,11 +68,12 @@ namespace ProcessScheduling.Scheduler
             if (!entries.Any())
                 return true;
 
-            return entries.All(p => p.ProcessEntry.ProcessState == ProcessStateEnum.Complete);
+            return entries.All(p => p.ProcessState == ProcessStateEnum.Complete);
         }
 
         private void UpdateEntryResultByProcessEntryState(ProcessEntryState pResult, ProcessStateEnum pState, int processQuantity, int eventCount)
         {
+            pResult.StateTime++;
             if (pState != ProcessStateEnum.Complete) 
             { 
                 // Actualizo Acumuladores
@@ -88,7 +89,6 @@ namespace ProcessScheduling.Scheduler
                 // Actualizo estado calculado.
                 pResult.ReturnTimeNormal = pResult.ReturnTime / processQuantity; // Dividido cpuTime
             }
-
             pResult.ServiceTimeRatio = eventCount / pResult.ServiceTime;
         }
 
