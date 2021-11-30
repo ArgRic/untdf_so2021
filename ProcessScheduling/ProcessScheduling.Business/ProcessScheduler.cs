@@ -111,7 +111,7 @@ namespace ProcessScheduling.Scheduler
             {
                 PolicyEnum.ShortestProcessNext => new ShortestProcessNextPolicy(this.ProcessSchedulerConfig),
                 PolicyEnum.FirstComeFirstServe => new FirstComeFirstServePolicy(this.ProcessSchedulerConfig),
-                PolicyEnum.ExternalPriotity => new ExternalPriotityPolicy(this.ProcessSchedulerConfig),
+                PolicyEnum.ExternalPriority => new ExternalPriorityPolicy(this.ProcessSchedulerConfig),
                 PolicyEnum.RoundRobin => new RoundRobinPolicy(this.ProcessSchedulerConfig),
                 PolicyEnum.ShortestRemainingTime => new ShortestRemainingTimePolicy(this.ProcessSchedulerConfig),
                 _ => new FirstComeFirstServePolicy(this.ProcessSchedulerConfig),

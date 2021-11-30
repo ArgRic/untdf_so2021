@@ -9,7 +9,7 @@ namespace ProcessScheduling.Scheduler.Model
     public enum PolicyEnum
     {
         FirstComeFirstServe,
-        ExternalPriotity,
+        ExternalPriority,
         RoundRobin,
         ShortestProcessNext,
         ShortestRemainingTime,
