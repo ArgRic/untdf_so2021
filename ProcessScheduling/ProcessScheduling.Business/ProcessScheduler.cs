@@ -26,7 +26,7 @@ namespace ProcessScheduling.Scheduler
             int totalCpuTime = 0;
             int processCount = this.ProcessEntries.Count();
             var schedulerResult = new SchedulerResult { ResultMessage = "Sin resultados" };
-            IEnumerable<ProcessEntryState> processes = this.ProcessEntries.Select(p => new ProcessEntryState { ProcessEntry = p });
+            IList<ProcessEntryState> processes = this.ProcessEntries.Select(p => new ProcessEntryState { ProcessEntry = p }).ToList();
 
             while (!this.WorkIsDone(processes))
             {
@@ -48,11 +48,7 @@ namespace ProcessScheduling.Scheduler
                         ProcessEntryState = pState.ProcessState
                     });
 
-                    this.UpdateEntryResultByProcessEntryState(
-                        pState,
-                        pState.ProcessState, 
-                        this.ProcessEntries.Count(), 
-                        totalCpuTime);
+                    this.ValidateProcessEntryState(pState,this.ProcessEntries.Count(),totalCpuTime);
                 }
 
                 schedulerResult.SchedulerEvents.Add(currentEvent);
@@ -71,25 +67,28 @@ namespace ProcessScheduling.Scheduler
             return entries.All(p => p.ProcessState == ProcessStateEnum.Complete);
         }
 
-        private void UpdateEntryResultByProcessEntryState(ProcessEntryState pResult, ProcessStateEnum pState, int processQuantity, int eventCount)
+        private void ValidateProcessEntryState(ProcessEntryState process, int processQuantity, int eventCount)
         {
-            pResult.StateTime++;
-            if (pState != ProcessStateEnum.Complete) 
-            { 
+            process.StateTime++;
+            if (process.ProcessState != ProcessStateEnum.Complete)
+            {
                 // Actualizo Acumuladores
-                pResult.ReturnTime++;
-                switch (pState)
+                process.ReturnTime++;
+                switch (process.ProcessState)
                 {
-                    case ProcessStateEnum.Running: pResult.ServiceTime++; break;
-                    case ProcessStateEnum.Ready: pResult.ReadyTime++; break;
-                    case ProcessStateEnum.Locked: pResult.LockTime++; break;
-                    case ProcessStateEnum.New: pResult.WaitTime++; break;
+                    case ProcessStateEnum.Running: process.ServiceTime++; break;
+                    case ProcessStateEnum.Ready: process.ReadyTime++; break;
+                    case ProcessStateEnum.Locked: process.LockTime++; break;
+                    case ProcessStateEnum.New: process.WaitTime++; break;
                     default: break;
                 }
                 // Actualizo estado calculado.
-                pResult.ReturnTimeNormal = pResult.ReturnTime / processQuantity; // Dividido cpuTime
+                process.ReturnTimeNormal = process.ReturnTime / processQuantity; // Dividido cpuTime
             }
-            pResult.ServiceTimeRatio = eventCount / pResult.ServiceTime;
+
+            if (process.ServiceTime > 0) { 
+                process.ServiceTimeRatio = eventCount / process.ServiceTime;
+            }
         }
 
         private void UpdateSchedulerResult(SchedulerResult schedulerResult)

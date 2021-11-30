@@ -4,37 +4,56 @@
     using System.Collections.Generic;
     using ProcessScheduling.Scheduler.Model;
 
-    public class FirstComeFirstServePolicy : IPolicy
+    public class FirstComeFirstServePolicy : AbstractPolicy
     {
-        private readonly ProcessSchedulerConfig config;
+        private int CurrentExchangeTime;
 
-        public FirstComeFirstServePolicy(ProcessSchedulerConfig config)
+        public FirstComeFirstServePolicy(ProcessSchedulerConfig config): base(config)
         {
-            this.config = config ?? throw new ArgumentNullException(nameof(config));
+            CurrentExchangeTime = 0;
         }
 
-        public bool UpdateProcessState(IEnumerable<ProcessEntryState> pResults)
+        public override bool UpdateProcessState(IList<ProcessEntryState> pResults)
         {
-            var runningProcess = pResults.FirstOrDefault(p => p.ProcessState == ProcessStateEnum.Running);
-            if (runningProcess is not null)
-            {
-                this.CheckRunningToLock(runningProcess);
-            }
-
-            bool skipUpdate = pResults.Any(p => p.ProcessState == ProcessStateEnum.Running);
-            if (skipUpdate)
+            // Arrivos y Salidas
+            this.CheckNewToReady(pResults, config.OverheadTimeToAccept);
+            this.CheckRunningToLock(pResults);
+            this.CheckLockToReadyOrComplete(pResults);
+            
+            // Salgo si termino la tanda.
+            if (pResults.All(p => p.ProcessState == ProcessStateEnum.Complete))
             {
                 return true;
             }
 
-            // Ninguno esta corriendo. Debo
+            // FCFS es no preemptivo. Salgo si el CPU esta siendo utilizado.
+            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Running))
+            {
+                return true;
+            }
 
-            return false;
+            // No hay procesos corriendo.
+            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Ready))
+            {
+                // Hay procesos en espera. El Scheduler se encuentra conmutando. 
+                CurrentExchangeTime++;
+                if (CurrentExchangeTime >= config.OverheadTimeToExchange)
+                {
+                    CurrentExchangeTime = 0;
+                    this.CheckReadyToRunning(pResults);
+                }
+            }
+
+            return true;
         }
 
-        private void CheckRunningToLock(ProcessEntryState runningProcess)
+        private void CheckReadyToRunning(IList<ProcessEntryState> pResults)
         {
-            
+            var readyProcesses = pResults.Where(p => p.ProcessState == ProcessStateEnum.Ready);
+            // Algoritmo de seleccion FCFS.
+            // Tomo el que esta hace mas tiempo en estado de espera.
+            var processToDispatch = readyProcesses.MaxBy(p => p.StateTime) ?? throw new InvalidOperationException(nameof(CheckReadyToRunning));
+            processToDispatch.Dispatch();
         }
     }
 }

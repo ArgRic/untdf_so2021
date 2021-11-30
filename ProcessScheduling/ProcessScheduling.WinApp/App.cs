@@ -90,9 +90,9 @@ namespace ProcessScheduling.WinApp
             try
             {
                 config.Policy = (PolicyEnum)policySelect.SelectedIndex;
-                config.Tip = Convert.ToInt32(this.tipUpDown.Value);
-                config.Tfp = Convert.ToInt32(this.tfpUpDown.Value);
-                config.Tcp = Convert.ToInt32(this.tcpUpDown.Value);
+                config.OverheadTimeToAccept = Convert.ToInt32(this.tipUpDown.Value);
+                config.OverheadTimeToComplete = Convert.ToInt32(this.tfpUpDown.Value);
+                config.OverheadTimeToExchange = Convert.ToInt32(this.tcpUpDown.Value);
                 config.Quantum = Convert.ToInt32(this.quantumUpDown.Value);
                 return config;
             }

@@ -12,12 +12,8 @@
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
         }
-        public bool UpdateProcessState(IEnumerable<ProcessEntry> processEntries)
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool UpdateProcessState(IEnumerable<ProcessEntryState> pResults)
+        public bool UpdateProcessState(IList<ProcessEntryState> pResults)
         {
             throw new NotImplementedException();
         }
