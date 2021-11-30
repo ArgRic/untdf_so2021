@@ -10,10 +10,12 @@ namespace ProcessScheduling.Scheduler.Policies
     public abstract class AbstractPolicy : IPolicy
     {
         protected readonly ProcessSchedulerConfig config;
+        protected int CurrentExchangeTime;
 
         protected AbstractPolicy(ProcessSchedulerConfig config) 
         { 
-           this.config = config ?? throw new ArgumentNullException(nameof(config));
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
+            CurrentExchangeTime = 0;
         }
 
         public virtual bool UpdateProcessState(IList<ProcessEntryState> pResults)
@@ -45,7 +47,7 @@ namespace ProcessScheduling.Scheduler.Policies
             }
         }
 
-        public void CheckLockToReadyOrComplete(IList<ProcessEntryState> pResults)
+        public void CheckLockToReadyOrComplete(IList<ProcessEntryState> pResults, int overhead)
         {
             var lockedProcesses = pResults.Where(p => p.ProcessState == ProcessStateEnum.Locked).ToList();
             foreach (var lockedP in lockedProcesses)
@@ -57,7 +59,10 @@ namespace ProcessScheduling.Scheduler.Policies
                     if (serviceTimeToComplete <= lockedP.ServiceTime)
                     {
                         // El proceso tambien termino su tiempo de CPU
-                        lockedP.Complete();
+                        if (lockedP.StateTime >= lockedP.ProcessEntry.IOBurstTime + overhead) 
+                        { 
+                            lockedP.Complete();
+                        }
                         continue;
                     }
 

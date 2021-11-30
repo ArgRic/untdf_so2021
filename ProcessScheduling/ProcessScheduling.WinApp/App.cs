@@ -63,6 +63,7 @@ namespace ProcessScheduling.WinApp
             dgvOutput.DataSource = dt;
 
             // Pintamos
+            // Color de celdas.
             foreach (DataGridViewRow viewRow in dgvOutput.Rows)
             {
                 foreach (var entryResult in result.Processes)
@@ -81,11 +82,9 @@ namespace ProcessScheduling.WinApp
                     viewRow.Cells[entryResult.ProcessEntry.Name].Style.BackColor = color;
                 }
             }
-
+            // Ancho de columnas
             foreach (var entryResult in result.Processes)
             {
-                // Acoplado al override ToString en ProcessSnapshot
-                Color color;
                 int columnIndex = dgvOutput.Columns.IndexOf(dgvOutput.Columns[entryResult.ProcessEntry.Name]);
                 dgvOutput.Columns[columnIndex].Width = 25;
             }

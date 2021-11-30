@@ -15,7 +15,7 @@
         {
             switch (ProcessEntryState)
             {
-                case ProcessStateEnum.Running: return "R";
+                case ProcessStateEnum.Running: return "S";
                 case ProcessStateEnum.New: return "·";
                 case ProcessStateEnum.Ready: return "W";
                 case ProcessStateEnum.Locked: return "L";

@@ -6,11 +6,9 @@
 
     public class FirstComeFirstServePolicy : AbstractPolicy
     {
-        private int CurrentExchangeTime;
 
         public FirstComeFirstServePolicy(ProcessSchedulerConfig config): base(config)
         {
-            CurrentExchangeTime = 0;
         }
 
         public override bool UpdateProcessState(IList<ProcessEntryState> pResults)
@@ -18,7 +16,7 @@
             // Arrivos y Salidas
             this.CheckNewToReady(pResults, config.OverheadTimeToAccept);
             this.CheckRunningToLock(pResults);
-            this.CheckLockToReadyOrComplete(pResults);
+            this.CheckLockToReadyOrComplete(pResults, config.OverheadTimeToComplete);
             
             // Salgo si termino la tanda.
             if (pResults.All(p => p.ProcessState == ProcessStateEnum.Complete))
