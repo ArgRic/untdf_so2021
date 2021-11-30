@@ -5,6 +5,6 @@
 
     public interface IPolicy
     {
-        public bool UpdateProcessEntries(IEnumerable<ProcessEntry> processEntries);
+        public bool UpdateProcessState(IEnumerable<ProcessEntryState> pResults);
     }
 }

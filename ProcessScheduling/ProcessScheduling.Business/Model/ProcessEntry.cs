@@ -12,9 +12,9 @@ namespace ProcessScheduling.Scheduler.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public int ArrivalTime { get; set; }
-        public int CpuBurstsToComplete { get; set; }
-        public int CpuBurstDuration { get; set; }
-        public int IOBurstDuration { get; set; }
+        public int BurstsQtyToComplete { get; set; }
+        public int BurstTime { get; set; }
+        public int IOBurstTime { get; set; }
         public int Priority { get; set; }
         public ProcessStateEnum ProcessState { get; set; }
 

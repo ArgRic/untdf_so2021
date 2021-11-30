@@ -27,9 +27,9 @@ namespace ProcessScheduling.WinApp.ViewModel
             {
                 Name = Nombre,
                 ArrivalTime = TiempoDeArribo,
-                CpuBurstsToComplete = RafagasCPUParaTerminar,
-                CpuBurstDuration = DuracionRafagaCPU,
-                IOBurstDuration = DuracionRafagaIO,
+                BurstsQtyToComplete = RafagasCPUParaTerminar,
+                BurstTime = DuracionRafagaCPU,
+                IOBurstTime = DuracionRafagaIO,
                 Priority = PrioridadExterna
             };
 

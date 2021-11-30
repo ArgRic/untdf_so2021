@@ -16,7 +16,7 @@ namespace ProcessScheduling.Scheduler.Policies
             this.config = config ?? throw new ArgumentNullException(nameof(config));
         }
 
-        public bool UpdateProcessEntries(IEnumerable<ProcessEntry> processEntries)
+        public bool UpdateProcessState(IEnumerable<ProcessEntryState> pResults)
         {
             throw new NotImplementedException();
         }

@@ -41,7 +41,7 @@ namespace ProcessScheduling.WinApp
             dt.Columns.Add("t", typeof(int));
             foreach (var entryResult in result.EntryResults) 
             {
-                dt.Columns.Add(entryResult.ProcessEntryName, typeof(string));
+                dt.Columns.Add(entryResult.ProcessEntry.Name, typeof(string));
             }
             dt.Columns.Add("Evento", typeof(string));
 
@@ -69,7 +69,7 @@ namespace ProcessScheduling.WinApp
                 {
                     // Acoplado al override ToString en ProcessSnapshot
                     Color color;
-                    switch (viewRow.Cells[entryResult.ProcessEntryName].Value.ToString())
+                    switch (viewRow.Cells[entryResult.ProcessEntry.Name].Value.ToString())
                     {
                         case "R": color = Color.Green; break;
                         case "W": color = Color.LightGray; break;
@@ -77,7 +77,7 @@ namespace ProcessScheduling.WinApp
                         case "C": color = Color.Gray; break;
                         default: color = Color.White; break;
                     }
-                    viewRow.Cells[entryResult.ProcessEntryName].Style.BackColor = color;
+                    viewRow.Cells[entryResult.ProcessEntry.Name].Style.BackColor = color;
                 }
             }
 

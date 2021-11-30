@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace ProcessScheduling.Scheduler.Model
 {
-    public class ProcessEntryResult
+    public class ProcessEntryState
     {
-        public int ProcessEntryId { get; set; }
-        public string ProcessEntryName { get; set; }
-        public int CpuTime { get; set; }
-        public float CpuTimeRatio { get; set; }
+        public ProcessEntry ProcessEntry { get; set; }
+        public int ServiceTime { get; set; }
+        public float ServiceTimeRatio { get; set; }
         public int WaitTime { get; set; }
         public int ReadyTime { get; set; }
         public int LockTime { get; set; }
         public float ReturnTimeNormal { get; set; }
         public int ReturnTime { get; set; }
 
-        public ProcessEntryResult()
+        public ProcessEntryState()
         {
-            ProcessEntryName = string.Empty;
+            ProcessEntry = new ProcessEntry();
         }
     }
 }

@@ -25,36 +25,32 @@ namespace ProcessScheduling.Scheduler
         {
             int totalCpuTime = 0;
             int processCount = this.ProcessEntries.Count();
-            var schedulerResult = new SchedulerResult
-            {
-                EntryResults = this.ProcessEntries.Select(p => new ProcessEntryResult { ProcessEntryId = p.Id }),
-                ResultMessage = "Sin resultados",
-            };
+            var schedulerResult = new SchedulerResult { ResultMessage = "Sin resultados" };
+            IEnumerable<ProcessEntryState> processes = this.ProcessEntries.Select(p => new ProcessEntryState { ProcessEntry = p });
 
-            while (!this.WorkIsDone(this.ProcessEntries))
+            while (!this.WorkIsDone(processes))
             {
                 // Nueva instancia evento
                 totalCpuTime++;
                 var currentEvent = new SchedulerEvent();
                 
                 // Actualizo estado de los procesos para la instancia segun politica.
-                bool success = this.ProcessSchedulerPolicy.UpdateProcessEntries(this.ProcessEntries);
+                bool success = this.ProcessSchedulerPolicy.UpdateProcessState(processes);
                 if (!success)
-                    throw new Exception("Error en " + nameof(ProcessSchedulerPolicy.UpdateProcessEntries));
+                    throw new Exception("Error en " + nameof(ProcessSchedulerPolicy.UpdateProcessState));
 
                 // Actualizo Output segun nuevo estado de procesos.
-                foreach (var entry in this.ProcessEntries)
+                foreach (var pState in processes)
                 {
                     currentEvent.ProcessSnapshots.Add(new ProcessSnapshot {
-                        ProcessEntryId = entry.Id,
-                        ProcessEntryName = entry.Name,
-                        ProcessEntryState = entry.ProcessState
+                        ProcessEntryId = pState.ProcessEntry.Id,
+                        ProcessEntryName = pState.ProcessEntry.Name,
+                        ProcessEntryState = pState.ProcessEntry.ProcessState
                     });
 
-                    var entryResult = schedulerResult.EntryResults.First(r => r.ProcessEntryId == entry.Id);
                     this.UpdateEntryResultByProcessEntryState(
-                        entryResult, 
-                        entry.ProcessState, 
+                        pState,
+                        pState.ProcessEntry.ProcessState, 
                         this.ProcessEntries.Count(), 
                         totalCpuTime);
                 }
@@ -67,15 +63,15 @@ namespace ProcessScheduling.Scheduler
             return schedulerResult;
         }
 
-        private bool WorkIsDone(IEnumerable<ProcessEntry> entries)
+        private bool WorkIsDone(IEnumerable<ProcessEntryState> entries)
         {
             if (!entries.Any())
                 return true;
 
-            return entries.All(p => p.ProcessState == ProcessStateEnum.Complete);
+            return entries.All(p => p.ProcessEntry.ProcessState == ProcessStateEnum.Complete);
         }
 
-        private void UpdateEntryResultByProcessEntryState(ProcessEntryResult pResult, ProcessStateEnum pState, int processQuantity, int eventCount)
+        private void UpdateEntryResultByProcessEntryState(ProcessEntryState pResult, ProcessStateEnum pState, int processQuantity, int eventCount)
         {
             if (pState != ProcessStateEnum.Complete) 
             { 
@@ -83,7 +79,7 @@ namespace ProcessScheduling.Scheduler
                 pResult.ReturnTime++;
                 switch (pState)
                 {
-                    case ProcessStateEnum.Running: pResult.CpuTime++; break;
+                    case ProcessStateEnum.Running: pResult.ServiceTime++; break;
                     case ProcessStateEnum.Ready: pResult.ReadyTime++; break;
                     case ProcessStateEnum.Locked: pResult.LockTime++; break;
                     case ProcessStateEnum.New: pResult.WaitTime++; break;
@@ -93,7 +89,7 @@ namespace ProcessScheduling.Scheduler
                 pResult.ReturnTimeNormal = pResult.ReturnTime / processQuantity; // Dividido cpuTime
             }
 
-            pResult.CpuTimeRatio = eventCount / pResult.CpuTime;
+            pResult.ServiceTimeRatio = eventCount / pResult.ServiceTime;
         }
 
         private void UpdateSchedulerResult(SchedulerResult schedulerResult)
@@ -104,7 +100,7 @@ namespace ProcessScheduling.Scheduler
             schedulerResult.ReadyTime = schedulerResult.EntryResults.Select(er => er.ReadyTime).Aggregate((a, b) => a + b);
             schedulerResult.CpuIdleTime = schedulerResult.EntryResults.Select(er => er.WaitTime).Aggregate((a, b) => a + b);
             schedulerResult.CpuOperatingSystemUseTime = schedulerResult.EntryResults.Select(er => er.LockTime).Aggregate((a, b) => a + b);
-            schedulerResult.CpuProcessUseTime = schedulerResult.EntryResults.Select(er => er.CpuTime).Aggregate((a, b) => a + b);
+            schedulerResult.CpuProcessUseTime = schedulerResult.EntryResults.Select(er => er.ServiceTime).Aggregate((a, b) => a + b);
             schedulerResult.ResultMessage = $"Terminado";
         }
 
