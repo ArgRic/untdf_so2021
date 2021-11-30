@@ -39,7 +39,7 @@ namespace ProcessScheduling.WinApp
             // Event DataTable
             var dt = new DataTable();
             dt.Columns.Add("t", typeof(int));
-            foreach (var entryResult in result.EntryResults) 
+            foreach (var entryResult in result.Processes) 
             {
                 dt.Columns.Add(entryResult.ProcessEntry.Name, typeof(string));
             }
@@ -63,15 +63,16 @@ namespace ProcessScheduling.WinApp
             dgvOutput.DataSource = dt;
 
             // Pintamos
-            foreach(DataGridViewRow viewRow in dgvOutput.Rows)
+            foreach (DataGridViewRow viewRow in dgvOutput.Rows)
             {
-                foreach (var entryResult in result.EntryResults)
+                foreach (var entryResult in result.Processes)
                 {
                     // Acoplado al override ToString en ProcessSnapshot
                     Color color;
-                    switch (viewRow.Cells[entryResult.ProcessEntry.Name].Value.ToString())
+                    int columnIndex = dgvOutput.Columns.IndexOf(dgvOutput.Columns[entryResult.ProcessEntry.Name]);
+                    switch (viewRow.Cells[columnIndex].Value?.ToString() ?? String.Empty)
                     {
-                        case "R": color = Color.Green; break;
+                        case "S": color = Color.Green; break;
                         case "W": color = Color.LightGray; break;
                         case "L": color = Color.PaleVioletRed; break;
                         case "C": color = Color.Gray; break;
@@ -81,6 +82,14 @@ namespace ProcessScheduling.WinApp
                 }
             }
 
+            foreach (var entryResult in result.Processes)
+            {
+                // Acoplado al override ToString en ProcessSnapshot
+                Color color;
+                int columnIndex = dgvOutput.Columns.IndexOf(dgvOutput.Columns[entryResult.ProcessEntry.Name]);
+                dgvOutput.Columns[columnIndex].Width = 25;
+            }
+            dgvOutput.Columns[0].Width = 25;
             dgvOutput.Visible = true;
         }
 

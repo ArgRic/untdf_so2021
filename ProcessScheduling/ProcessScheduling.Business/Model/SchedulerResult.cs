@@ -14,13 +14,13 @@ namespace ProcessScheduling.Scheduler.Model
         public int CpuIdleTime { get; set; }
         public int CpuOperatingSystemUseTime { get; set; }
         public int CpuProcessUseTime { get; set; }
-        public IEnumerable<ProcessEntryState> EntryResults { get; set; }
+        public IEnumerable<ProcessEntryState> Processes { get; set; }
         public IList<SchedulerEvent> SchedulerEvents { get; set; }
         public string ResultMessage { get; set; }
 
         public SchedulerResult()
         {
-            this.EntryResults = new List<ProcessEntryState>();
+            this.Processes = new List<ProcessEntryState>();
             this.SchedulerEvents = new List<SchedulerEvent>();
             this.ResultMessage = string.Empty;
         }

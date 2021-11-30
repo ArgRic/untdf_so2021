@@ -27,7 +27,7 @@ namespace ProcessScheduling.Scheduler.Model
 
         public bool Complete()
         {
-            if (this.ProcessState == ProcessStateEnum.Running)
+            if (this.ProcessState == ProcessStateEnum.Running || this.ProcessState == ProcessStateEnum.Locked)
             {
                 this.ProcessState = ProcessStateEnum.Complete;
                 this.StateTime = 0;

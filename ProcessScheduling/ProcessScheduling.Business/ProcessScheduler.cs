@@ -54,8 +54,10 @@ namespace ProcessScheduling.Scheduler
                 schedulerResult.SchedulerEvents.Add(currentEvent);
             }
 
-            if (processCount > 0)
+            if (processCount > 0) {
+                schedulerResult.Processes = processes;
                 this.UpdateSchedulerResult(schedulerResult);
+            }
             return schedulerResult;
         }
 
@@ -93,13 +95,13 @@ namespace ProcessScheduling.Scheduler
 
         private void UpdateSchedulerResult(SchedulerResult schedulerResult)
         {
-            var resultQuantity = schedulerResult.EntryResults.Count();
-            schedulerResult.ReturnTime = schedulerResult.EntryResults.Select(er => er.ReturnTime).Aggregate((a, b) => a + b);
-            schedulerResult.ReturnTimeMedia = schedulerResult.EntryResults.Select(er => er.ReturnTime).Aggregate((a, b) => a + b) / resultQuantity;
-            schedulerResult.ReadyTime = schedulerResult.EntryResults.Select(er => er.ReadyTime).Aggregate((a, b) => a + b);
-            schedulerResult.CpuIdleTime = schedulerResult.EntryResults.Select(er => er.WaitTime).Aggregate((a, b) => a + b);
-            schedulerResult.CpuOperatingSystemUseTime = schedulerResult.EntryResults.Select(er => er.LockTime).Aggregate((a, b) => a + b);
-            schedulerResult.CpuProcessUseTime = schedulerResult.EntryResults.Select(er => er.ServiceTime).Aggregate((a, b) => a + b);
+            var resultQuantity = schedulerResult.Processes.Count();
+            schedulerResult.ReturnTime = schedulerResult.Processes.Select(er => er.ReturnTime).Aggregate((a, b) => a + b);
+            schedulerResult.ReturnTimeMedia = schedulerResult.Processes.Select(er => er.ReturnTime).Aggregate((a, b) => a + b) / resultQuantity;
+            schedulerResult.ReadyTime = schedulerResult.Processes.Select(er => er.ReadyTime).Aggregate((a, b) => a + b);
+            schedulerResult.CpuIdleTime = schedulerResult.Processes.Select(er => er.WaitTime).Aggregate((a, b) => a + b);
+            schedulerResult.CpuOperatingSystemUseTime = schedulerResult.Processes.Select(er => er.LockTime).Aggregate((a, b) => a + b);
+            schedulerResult.CpuProcessUseTime = schedulerResult.Processes.Select(er => er.ServiceTime).Aggregate((a, b) => a + b);
             schedulerResult.ResultMessage = $"Terminado";
         }
 
