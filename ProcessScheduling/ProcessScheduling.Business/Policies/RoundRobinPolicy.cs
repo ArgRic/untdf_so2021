@@ -9,6 +9,13 @@ namespace ProcessScheduling.Scheduler.Policies
 {
     public class RoundRobinPolicy : IPolicy
     {
+        private readonly ProcessSchedulerConfig config;
+
+        public RoundRobinPolicy(ProcessSchedulerConfig config)
+        {
+            this.config = config ?? throw new ArgumentNullException(nameof(config));
+        }
+
         public bool UpdateProcessEntries(IEnumerable<ProcessEntry> processEntries)
         {
             throw new NotImplementedException();

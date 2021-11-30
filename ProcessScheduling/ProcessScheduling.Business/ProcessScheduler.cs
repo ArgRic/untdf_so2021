@@ -14,11 +14,11 @@ namespace ProcessScheduling.Scheduler
         private readonly ProcessSchedulerConfig ProcessSchedulerConfig;
         private readonly IPolicy ProcessSchedulerPolicy;
 
-        public ProcessScheduler(IPolicy policy, IEnumerable<ProcessEntry> processEntries, ProcessSchedulerConfig config)
+        public ProcessScheduler(PolicyEnum policy, IEnumerable<ProcessEntry> processEntries, ProcessSchedulerConfig config)
         {
             this.ProcessEntries = processEntries ?? throw new ArgumentNullException(nameof(processEntries));
             this.ProcessSchedulerConfig = config ?? throw new ArgumentNullException(nameof(config));
-            this.ProcessSchedulerPolicy = policy ?? throw new ArgumentNullException(nameof(policy));
+            this.ProcessSchedulerPolicy = this.PolicyFactory(policy) ?? throw new ArgumentNullException(nameof(policy));
         }
 
         public SchedulerResult Work()
@@ -38,7 +38,7 @@ namespace ProcessScheduling.Scheduler
                 var currentEvent = new SchedulerEvent();
                 
                 // Actualizo estado de los procesos para la instancia segun politica.
-                bool success = this.ProcessSchedulerPolicy.UpdateProcessEntries(ProcessEntries);
+                bool success = this.ProcessSchedulerPolicy.UpdateProcessEntries(this.ProcessEntries);
                 if (!success)
                     throw new Exception("Error en " + nameof(ProcessSchedulerPolicy.UpdateProcessEntries));
 
@@ -89,10 +89,10 @@ namespace ProcessScheduling.Scheduler
                     case ProcessStateEnum.New: pResult.WaitTime++; break;
                     default: break;
                 }
+                // Actualizo estado calculado.
+                pResult.ReturnTimeNormal = pResult.ReturnTime / processQuantity; // Dividido cpuTime
             }
 
-            // Actualizo estado calculado.
-            pResult.ReturnTimeNormal = pResult.ReadyTime / processQuantity;
             pResult.CpuTimeRatio = eventCount / pResult.CpuTime;
         }
 
@@ -100,12 +100,25 @@ namespace ProcessScheduling.Scheduler
         {
             var resultQuantity = schedulerResult.EntryResults.Count();
             schedulerResult.ReturnTime = schedulerResult.EntryResults.Select(er => er.ReturnTime).Aggregate((a, b) => a + b);
-            schedulerResult.NormalizedReturnTime = schedulerResult.EntryResults.Select(er => er.ReturnTime).Aggregate((a, b) => a + b) / resultQuantity;
+            schedulerResult.ReturnTimeMedia = schedulerResult.EntryResults.Select(er => er.ReturnTime).Aggregate((a, b) => a + b) / resultQuantity;
             schedulerResult.ReadyTime = schedulerResult.EntryResults.Select(er => er.ReadyTime).Aggregate((a, b) => a + b);
             schedulerResult.CpuIdleTime = schedulerResult.EntryResults.Select(er => er.WaitTime).Aggregate((a, b) => a + b);
             schedulerResult.CpuOperatingSystemUseTime = schedulerResult.EntryResults.Select(er => er.LockTime).Aggregate((a, b) => a + b);
             schedulerResult.CpuProcessUseTime = schedulerResult.EntryResults.Select(er => er.CpuTime).Aggregate((a, b) => a + b);
             schedulerResult.ResultMessage = $"Terminado";
+        }
+
+        private IPolicy PolicyFactory(PolicyEnum policyEnum)
+        {
+            return policyEnum switch
+            {
+                PolicyEnum.ShortestProcessNext => new ShortestProcessNextPolicy(this.ProcessSchedulerConfig),
+                PolicyEnum.FirstComeFirstServe => new FirstComeFirstServePolicy(this.ProcessSchedulerConfig),
+                PolicyEnum.ExternalPriotity => new ExternalPriotityPolicy(this.ProcessSchedulerConfig),
+                PolicyEnum.RoundRobin => new RoundRobinPolicy(this.ProcessSchedulerConfig),
+                PolicyEnum.ShortestRemainingTime => new ShortestRemainingTimePolicy(this.ProcessSchedulerConfig),
+                _ => new FirstComeFirstServePolicy(this.ProcessSchedulerConfig),
+            };
         }
     }
 }

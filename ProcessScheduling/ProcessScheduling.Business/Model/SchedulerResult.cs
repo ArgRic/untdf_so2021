@@ -9,7 +9,7 @@ namespace ProcessScheduling.Scheduler.Model
     public class SchedulerResult
     {
         public int ReturnTime { get; set; }
-        public float NormalizedReturnTime { get; set; }
+        public float ReturnTimeMedia { get; set; }
         public int ReadyTime { get; set; }
         public int CpuIdleTime { get; set; }
         public int CpuOperatingSystemUseTime { get; set; }

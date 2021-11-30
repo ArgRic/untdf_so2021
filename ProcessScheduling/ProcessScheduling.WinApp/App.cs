@@ -13,6 +13,7 @@ namespace ProcessScheduling.WinApp
     public partial class App : Form
     {
         readonly AppService appService;
+        string currentPath = string.Empty;
 
         public App(AppService appService)
         {
@@ -24,10 +25,9 @@ namespace ProcessScheduling.WinApp
             policySelect.DataSource = Enum.GetNames(typeof(PolicyEnum));
         }
 
-        private void StartScheduler(ProcessSchedulerConfig config)
+        private void StartScheduler(IEnumerable<ProcessEntry> entries, ProcessSchedulerConfig config)
         {
-            var entries = new List<ProcessEntry>();
-            var scheduler = new ProcessScheduler(this.PolicyFactory(config.Policy), entries, config);
+            var scheduler = new ProcessScheduler(config.Policy, entries, config);
             var result = scheduler.Work();
             this.SetDataTable(result);
         }
@@ -84,19 +84,6 @@ namespace ProcessScheduling.WinApp
             dgvOutput.Visible = true;
         }
 
-        private IPolicy PolicyFactory(PolicyEnum policyEnum)
-        {
-            return policyEnum switch
-            {
-                PolicyEnum.ShortestProcessNext => new ShortestProcessNextPolicy(),
-                PolicyEnum.FirstComeFirstServe => new FirstComeFirstServePolicy(),
-                PolicyEnum.ExternalPriotity => new ExternalPriotityPolicy(),
-                PolicyEnum.RoundRobin => new RoundRobinPolicy(),
-                PolicyEnum.ShortestRemainingTime => new ShortestRemainingTimePolicy(),
-                _ => new FirstComeFirstServePolicy(),
-            };
-        }
-
         private ProcessSchedulerConfig? ReadSchedulerConfig()
         {
             ProcessSchedulerConfig config = new ProcessSchedulerConfig();
@@ -134,20 +121,29 @@ namespace ProcessScheduling.WinApp
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fdlg.FileName))
                 {
                     this.filenameLabel.Text = fdlg.FileName;
-                    this.appService.TryLoadFiles(fdlg.FileName);
+                    this.currentPath = fdlg.FileName;
+                    this.startButton.Enabled = true;
+                }
+                else
+                {
+                    this.filenameLabel.Text = "Seleccionar Archivo";
+                    this.currentPath = string.Empty;
                 }
             }
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
+            // Reset de estado.
+            this.dgvOutput.DataSource = null;
             this.startButton.Enabled = false;
-
+            
             var config = this.ReadSchedulerConfig();
-            if (config != null)
+            if (config != null && !string.IsNullOrEmpty(this.currentPath))
             {
+                var entries = this.appService.TryLoadFiles(this.currentPath);
+                this.StartScheduler(entries, config);
                 this.startButton.Enabled = true;
-                this.StartScheduler(config);
             }
 
         }
