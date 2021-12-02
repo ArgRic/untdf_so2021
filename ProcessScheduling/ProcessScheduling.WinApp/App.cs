@@ -13,7 +13,6 @@ namespace ProcessScheduling.WinApp
     public partial class App : Form
     {
         readonly AppService appService;
-        string currentPath = string.Empty;
 
         public App(AppService appService)
         {
@@ -27,9 +26,10 @@ namespace ProcessScheduling.WinApp
 
         private void StartScheduler(IEnumerable<ProcessEntry> entries, ProcessSchedulerConfig config)
         {
-            var scheduler = new ProcessScheduler(config.Policy, entries, config);
+            var scheduler = new ProcessScheduler(entries, config);
             var result = scheduler.Work();
             this.SetDataTable(result);
+            this.appService.TryWriteResultFile(result);
         }
 
         private void SetDataTable(SchedulerResult result)
@@ -74,12 +74,14 @@ namespace ProcessScheduling.WinApp
                     switch (viewRow.Cells[columnIndex].Value?.ToString() ?? String.Empty)
                     {
                         case "S": color = Color.Green; break;
-                        case "W": color = Color.LightGray; break;
-                        case "L": color = Color.PaleVioletRed; break;
-                        case "C": color = Color.Gray; break;
+                        case "E": color = Color.SandyBrown; break;
+                        case "R": color = Color.LightGray; break;
+                        case "IO": color = Color.PaleVioletRed; break;
+                        case "T": color = Color.Black; break;
                         default: color = Color.White; break;
                     }
                     viewRow.Cells[entryResult.ProcessEntry.Name].Style.BackColor = color;
+                    viewRow.Cells[columnIndex].Value = string.Empty;
                 }
             }
             // Ancho de columnas
@@ -121,7 +123,7 @@ namespace ProcessScheduling.WinApp
             using (var fdlg = new OpenFileDialog())
             {
                 fdlg.Title = "Seleccion de archivo";
-                fdlg.InitialDirectory = @"c:\";
+                fdlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 fdlg.Filter = "Archivo separado por comas (*.csv)|*.csv|Archivo de texto (*.txt)|*.txt";
                 fdlg.FilterIndex = 0;
                 fdlg.RestoreDirectory = true;
@@ -129,13 +131,13 @@ namespace ProcessScheduling.WinApp
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fdlg.FileName))
                 {
                     this.filenameLabel.Text = fdlg.FileName;
-                    this.currentPath = fdlg.FileName;
+                    this.appService.CurrentFilePath = fdlg.FileName;
                     this.startButton.Enabled = true;
                 }
                 else
                 {
                     this.filenameLabel.Text = "Seleccionar Archivo";
-                    this.currentPath = string.Empty;
+                    this.appService.CurrentFilePath = string.Empty;
                 }
             }
         }
@@ -147,12 +149,16 @@ namespace ProcessScheduling.WinApp
             this.startButton.Enabled = false;
             
             var config = this.ReadSchedulerConfig();
-            if (config != null && !string.IsNullOrEmpty(this.currentPath))
+            if (config != null && !string.IsNullOrEmpty(this.appService.CurrentFilePath))
             {
-                var entries = this.appService.TryLoadFiles(this.currentPath);
+                var entries = this.appService.TryLoadFiles();
                 this.StartScheduler(entries, config);
                 this.startButton.Enabled = true;
             }
+        }
+
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
 
         }
     }

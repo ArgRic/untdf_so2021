@@ -16,13 +16,14 @@ namespace ProcessScheduling.Scheduler.Model
         public int BurstTime { get; set; }
         public int IOBurstTime { get; set; }
         public int Priority { get; set; }
+        public int ServiceTimeToComplete { get => BurstTime * BurstsQtyToComplete; }
+        public int LockTimeToComplete { get => (IOBurstTime * (this.BurstsQtyToComplete - 1)) + IOBurstTime; }
 
         public ProcessEntry()
         {
             this.Id = IdCounter++;
             this.Name = String.Empty;
         }
-
 
     }
 }

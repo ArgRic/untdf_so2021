@@ -19,12 +19,10 @@ namespace ProcessScheduling.Scheduler.Policies
         public override bool UpdateProcessState(IList<ProcessEntryState> pResults)
         {
             // Arrivos y Salidas
-            this.CheckNewToReady(pResults, config.OverheadTimeToAccept);
-            this.CheckRunningToLock(pResults);
-            this.CheckLockToReadyOrComplete(pResults, config.OverheadTimeToComplete);
+            this.CommonChecks(pResults);
 
             // Salgo si termino la tanda.
-            if (pResults.All(p => p.ProcessState == ProcessStateEnum.Complete))
+            if (pResults.All(p => p.ProcessState == ProcessStateEnum.Terminated))
             {
                 return true;
             }
@@ -62,7 +60,7 @@ namespace ProcessScheduling.Scheduler.Policies
             {
                 var lowestServiceTimeProcess = pResults
                     .Where(p => p.ProcessState == ProcessStateEnum.Ready)
-                    .MinBy(p => RemainingTime(p));
+                    .MinBy(p => p.ProcessEntry.ServiceTimeToComplete - p.ServiceTime);
                 if (lowestServiceTimeProcess is not null)
                 {
                     // El proceso se interrumpe por existencia de otro listo con mayor prioridad.
@@ -77,18 +75,12 @@ namespace ProcessScheduling.Scheduler.Policies
             }
         }
 
-        private int RemainingTime(ProcessEntryState p)
-        {
-            int totalServiceRequired = p.ProcessEntry.BurstTime * p.ProcessEntry.BurstsQtyToComplete;
-            return totalServiceRequired - p.ServiceTime;
-        }
-
         private void CheckReadyToRunning(IList<ProcessEntryState> pResults)
         {
             var readyProcesses = pResults.Where(p => p.ProcessState == ProcessStateEnum.Ready);
             // Algoritmo de seleccion por prioridad.
             // Tomo el que tiene menos tiempo de cpu remantente.
-            var processToDispatch = readyProcesses.MinBy(p => RemainingTime(p)) ?? throw new InvalidOperationException(nameof(CheckReadyToRunning));
+            var processToDispatch = readyProcesses.MinBy(p => p.ProcessEntry.ServiceTimeToComplete - p.ServiceTime) ?? throw new InvalidOperationException(nameof(CheckReadyToRunning));
             processToDispatch.Dispatch();
             // Recupero ServiceTime interrumpido
             if (this.ProcessStateRecovery.ContainsKey(processToDispatch.ProcessEntry.Name))

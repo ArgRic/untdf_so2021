@@ -16,8 +16,8 @@ namespace ProcessScheduling.Scheduler.Model
         public int WaitTime { get; set; }
         public int ReadyTime { get; set; }
         public int LockTime { get; set; }
-        public float ReturnTimeNormal { get; set; }
-        public int ReturnTime { get; set; }
+        public float ProcessNormalizedReturnTime { get => (float)ProcessReturnTime / (float)ServiceTime; }
+        public int ProcessReturnTime { get; set; }
 
         public ProcessEntryState()
         {
@@ -25,11 +25,24 @@ namespace ProcessScheduling.Scheduler.Model
             this.ProcessState = ProcessStateEnum.New;
         }
 
-        public bool Complete()
+        public bool Exit()
         {
             if (this.ProcessState == ProcessStateEnum.Running || this.ProcessState == ProcessStateEnum.Locked)
             {
-                this.ProcessState = ProcessStateEnum.Complete;
+                this.ProcessState = ProcessStateEnum.Exit;
+                this.StateTime = 0;
+                return true;
+            }
+
+            return false;
+
+        }
+
+        public bool Terminate()
+        {
+            if (this.ProcessState == ProcessStateEnum.Exit)
+            {
+                this.ProcessState = ProcessStateEnum.Terminated;
                 this.StateTime = 0;
                 return true;
             }
@@ -64,6 +77,7 @@ namespace ProcessScheduling.Scheduler.Model
 
             return false;
         }
+
         public bool Dispatch()
         {
             if (this.ProcessState == ProcessStateEnum.Ready)

@@ -51,14 +51,10 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.filenameLabel = new System.Windows.Forms.Label();
             this.loadFileButton = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.resetButton = new System.Windows.Forms.Button();
-            this.startButton = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.startButton = new System.Windows.Forms.Button();
             this.logPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.dgvOutput = new System.Windows.Forms.DataGridView();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.statusLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.flpApp.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -72,11 +68,9 @@
             this.tipPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tipUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.logPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOutput)).BeginInit();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -84,28 +78,25 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.flpApp, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox4, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.groupBox5, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(769, 420);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 447F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(769, 598);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // flpApp
             // 
             this.flpApp.Controls.Add(this.groupBox1);
             this.flpApp.Controls.Add(this.groupBox2);
-            this.flpApp.Controls.Add(this.groupBox3);
-            this.flpApp.Controls.Add(this.groupBox5);
-            this.flpApp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpApp.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpApp.Location = new System.Drawing.Point(2, 2);
-            this.flpApp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.flpApp.Margin = new System.Windows.Forms.Padding(2);
             this.flpApp.Name = "flpApp";
-            this.flpApp.Size = new System.Drawing.Size(765, 316);
+            this.flpApp.Size = new System.Drawing.Size(765, 121);
             this.flpApp.TabIndex = 1;
             // 
             // groupBox1
@@ -116,10 +107,10 @@
             this.groupBox1.Controls.Add(this.flowLayoutPanel1);
             this.groupBox1.Controls.Add(this.tipPanel);
             this.groupBox1.Location = new System.Drawing.Point(2, 2);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(261, 137);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(756, 65);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "CPU Config";
@@ -157,9 +148,9 @@
             // 
             this.flowLayoutPanel3.Controls.Add(this.quantumLabel);
             this.flowLayoutPanel3.Controls.Add(this.quantumUpDown);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(122, 102);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(598, 21);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(144, 30);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(154, 30);
             this.flowLayoutPanel3.TabIndex = 5;
             // 
             // quantumLabel
@@ -185,9 +176,9 @@
             // 
             this.flowLayoutPanel2.Controls.Add(this.label1);
             this.flowLayoutPanel2.Controls.Add(this.tcpUpDown);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(10, 102);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(361, 21);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(96, 30);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(101, 30);
             this.flowLayoutPanel2.TabIndex = 4;
             // 
             // label1
@@ -213,9 +204,9 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.tfpLabel);
             this.flowLayoutPanel1.Controls.Add(this.tfpUpDown);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(122, 66);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(468, 21);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(98, 30);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(124, 30);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
             // tfpLabel
@@ -233,7 +224,7 @@
             // 
             this.tfpUpDown.Location = new System.Drawing.Point(44, 3);
             this.tfpUpDown.Name = "tfpUpDown";
-            this.tfpUpDown.Size = new System.Drawing.Size(46, 23);
+            this.tfpUpDown.Size = new System.Drawing.Size(62, 23);
             this.tfpUpDown.TabIndex = 0;
             this.tfpUpDown.Tag = "";
             // 
@@ -241,7 +232,7 @@
             // 
             this.tipPanel.Controls.Add(this.tipLabel);
             this.tipPanel.Controls.Add(this.tipUpDown);
-            this.tipPanel.Location = new System.Drawing.Point(10, 66);
+            this.tipPanel.Location = new System.Drawing.Point(259, 21);
             this.tipPanel.Name = "tipPanel";
             this.tipPanel.Size = new System.Drawing.Size(96, 30);
             this.tipPanel.TabIndex = 2;
@@ -269,26 +260,26 @@
             // 
             this.groupBox2.Controls.Add(this.filenameLabel);
             this.groupBox2.Controls.Add(this.loadFileButton);
-            this.groupBox2.Location = new System.Drawing.Point(2, 143);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Location = new System.Drawing.Point(2, 71);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(261, 109);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(752, 47);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "File";
             // 
             // filenameLabel
             // 
-            this.filenameLabel.Location = new System.Drawing.Point(13, 18);
+            this.filenameLabel.Location = new System.Drawing.Point(150, 14);
             this.filenameLabel.Name = "filenameLabel";
-            this.filenameLabel.Size = new System.Drawing.Size(239, 50);
+            this.filenameLabel.Size = new System.Drawing.Size(597, 28);
             this.filenameLabel.TabIndex = 1;
             this.filenameLabel.Text = "Seleccionar Archivo";
             // 
             // loadFileButton
             // 
-            this.loadFileButton.Location = new System.Drawing.Point(66, 81);
+            this.loadFileButton.Location = new System.Drawing.Point(10, 14);
             this.loadFileButton.Name = "loadFileButton";
             this.loadFileButton.Size = new System.Drawing.Size(134, 23);
             this.loadFileButton.TabIndex = 0;
@@ -296,102 +287,61 @@
             this.loadFileButton.UseVisualStyleBackColor = true;
             this.loadFileButton.Click += new System.EventHandler(this.loadFileButton_Click);
             // 
-            // groupBox3
+            // groupBox5
             // 
-            this.groupBox3.Controls.Add(this.resetButton);
-            this.groupBox3.Controls.Add(this.startButton);
-            this.groupBox3.Location = new System.Drawing.Point(2, 256);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox3.Size = new System.Drawing.Size(261, 51);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Emulador";
-            // 
-            // resetButton
-            // 
-            this.resetButton.Enabled = false;
-            this.resetButton.Location = new System.Drawing.Point(5, 20);
-            this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(106, 23);
-            this.resetButton.TabIndex = 1;
-            this.resetButton.Text = "Reiniciar";
-            this.resetButton.UseVisualStyleBackColor = true;
+            this.groupBox5.Controls.Add(this.startButton);
+            this.groupBox5.Controls.Add(this.logPanel);
+            this.groupBox5.Location = new System.Drawing.Point(3, 131);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(757, 463);
+            this.groupBox5.TabIndex = 5;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Output  (Verde: CPU   Rojo: I/O   Gris: Ready   Naranja: Exit, Negro: Terminado)";
             // 
             // startButton
             // 
             this.startButton.Enabled = false;
-            this.startButton.Location = new System.Drawing.Point(150, 20);
+            this.startButton.Location = new System.Drawing.Point(671, 0);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(106, 23);
+            this.startButton.Size = new System.Drawing.Size(80, 23);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Iniciar";
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.logPanel);
-            this.groupBox5.Location = new System.Drawing.Point(268, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(495, 310);
-            this.groupBox5.TabIndex = 5;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Output";
-            // 
             // logPanel
             // 
             this.logPanel.Controls.Add(this.dgvOutput);
-            this.logPanel.Location = new System.Drawing.Point(3, 19);
+            this.logPanel.Location = new System.Drawing.Point(3, 22);
             this.logPanel.Name = "logPanel";
-            this.logPanel.Size = new System.Drawing.Size(489, 291);
+            this.logPanel.Size = new System.Drawing.Size(750, 435);
             this.logPanel.TabIndex = 0;
             // 
             // dgvOutput
             // 
+            this.dgvOutput.AllowUserToAddRows = false;
+            this.dgvOutput.AllowUserToDeleteRows = false;
+            this.dgvOutput.AllowUserToResizeRows = false;
             this.dgvOutput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOutput.Location = new System.Drawing.Point(3, 3);
             this.dgvOutput.MultiSelect = false;
             this.dgvOutput.Name = "dgvOutput";
             this.dgvOutput.ReadOnly = true;
+            this.dgvOutput.RowHeadersVisible = false;
             this.dgvOutput.RowHeadersWidth = 62;
             this.dgvOutput.RowTemplate.Height = 25;
-            this.dgvOutput.Size = new System.Drawing.Size(481, 282);
+            this.dgvOutput.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvOutput.Size = new System.Drawing.Size(742, 429);
             this.dgvOutput.TabIndex = 0;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.statusLabel);
-            this.groupBox4.Location = new System.Drawing.Point(2, 322);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox4.Size = new System.Drawing.Size(765, 87);
-            this.groupBox4.TabIndex = 4;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Status";
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.statusLabel.Location = new System.Drawing.Point(2, 18);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(53, 20);
-            this.statusLabel.TabIndex = 2;
-            this.statusLabel.Text = "Status";
-            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // App
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(769, 420);
+            this.ClientSize = new System.Drawing.Size(769, 598);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "App";
             this.Text = "ProcessScheduler - Mansilla Ricardo";
@@ -413,12 +363,9 @@
             this.tipPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tipUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.logPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOutput)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -445,13 +392,9 @@
         private NumericUpDown tipUpDown;
         private GroupBox groupBox2;
         private Button loadFileButton;
-        private GroupBox groupBox3;
-        private Button resetButton;
         private Button startButton;
         private GroupBox groupBox5;
         private FlowLayoutPanel logPanel;
-        private GroupBox groupBox4;
-        private Label statusLabel;
         private DataGridView dgvOutput;
         private Label filenameLabel;
     }

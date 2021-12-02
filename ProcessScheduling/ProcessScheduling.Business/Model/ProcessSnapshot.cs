@@ -17,9 +17,10 @@
             {
                 case ProcessStateEnum.Running: return "S";
                 case ProcessStateEnum.New: return "·";
-                case ProcessStateEnum.Ready: return "W";
-                case ProcessStateEnum.Locked: return "L";
-                case ProcessStateEnum.Complete: return "C";
+                case ProcessStateEnum.Ready: return "R";
+                case ProcessStateEnum.Locked: return "IO";
+                case ProcessStateEnum.Exit: return "E";
+                case ProcessStateEnum.Terminated: return "T";
                 default : return string.Empty;
             }
         }

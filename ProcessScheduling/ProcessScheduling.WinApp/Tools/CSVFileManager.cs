@@ -1,14 +1,15 @@
 ﻿namespace ProcessScheduling.WinApp.Tools
 {
     using CsvHelper;
+    using ProcessScheduling.Scheduler.Model;
     using ProcessScheduling.WinApp.ViewModel;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
 
-    public class PayloadFileManager
+    public class CSVFileManager
     {
-        public PayloadFileManager()
+        public CSVFileManager()
         {
         }
 

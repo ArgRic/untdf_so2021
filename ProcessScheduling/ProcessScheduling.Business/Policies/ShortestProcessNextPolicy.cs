@@ -13,34 +13,32 @@ namespace ProcessScheduling.Scheduler.Policies
         {
         }
 
-        public override bool UpdateProcessState(IList<ProcessEntryState> pResults)
+        public override bool UpdateProcessState(IList<ProcessEntryState> processes)
         {
             // Arrivos y Salidas
-            this.CheckNewToReady(pResults, config.OverheadTimeToAccept);
-            this.CheckRunningToLock(pResults);
-            this.CheckLockToReadyOrComplete(pResults, config.OverheadTimeToComplete);
+            this.CommonChecks(processes);
 
             // Salgo si termino la tanda.
-            if (pResults.All(p => p.ProcessState == ProcessStateEnum.Complete))
+            if (processes.All(p => p.ProcessState == ProcessStateEnum.Terminated))
             {
                 return true;
             }
 
             // SPN es no preemptivo. Salgo si el CPU esta siendo utilizado.
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Running))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Running))
             {
                 return true;
             }
 
             // No hay procesos corriendo.
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Ready))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Ready))
             {
                 // Hay procesos en espera. El Scheduler se encuentra conmutando. 
                 CurrentExchangeTime++;
                 if (CurrentExchangeTime >= config.OverheadTimeToExchange)
                 {
                     CurrentExchangeTime = 0;
-                    this.CheckReadyToRunning(pResults);
+                    this.CheckReadyToRunning(processes);
                 }
             }
 

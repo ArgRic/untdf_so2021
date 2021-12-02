@@ -13,39 +13,37 @@
             ProcessStateRecovery = new Dictionary<string, int>();
         }
 
-        public override bool UpdateProcessState(IList<ProcessEntryState> pResults)
+        public override bool UpdateProcessState(IList<ProcessEntryState> processes)
         {
             // Arrivos y Salidas
-            this.CheckNewToReady(pResults, config.OverheadTimeToAccept);
-            this.CheckRunningToLock(pResults);
-            this.CheckLockToReadyOrComplete(pResults, config.OverheadTimeToComplete);
+            this.CommonChecks(processes);
 
             // Salgo si termino la tanda.
-            if (pResults.All(p => p.ProcessState == ProcessStateEnum.Complete))
+            if (processes.All(p => p.ProcessState == ProcessStateEnum.Terminated))
             {
                 return true;
             }
 
             // PrioridadExterna es preemptiva. El proceso que aun corre puede interrumpirse
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Running))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Running))
             {
-                this.CheckRunningToReadyByPriority(pResults);
+                this.CheckRunningToReadyByPriority(processes);
             }
 
             // Si el proceso no fue interrumpido y sigue corriendo. Salgo
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Running))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Running))
             {
                 return true;
             }
 
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Ready))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Ready))
             {
                 // Hay procesos en espera o corriendo. El Scheduler se encuentra conmutando. 
                 CurrentExchangeTime++;
                 if (CurrentExchangeTime >= config.OverheadTimeToExchange)
                 {
                     CurrentExchangeTime = 0;
-                    this.CheckReadyToRunning(pResults);
+                    this.CheckReadyToRunning(processes);
                 }
             }
 

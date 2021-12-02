@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProcessScheduling.Scheduler.Model
+﻿namespace ProcessScheduling.Scheduler.Model
 {
     public enum ProcessStateEnum
     {
@@ -12,6 +6,7 @@ namespace ProcessScheduling.Scheduler.Model
         Ready,
         Running,
         Locked,
-        Complete,
+        Exit,
+        Terminated,
     }
 }

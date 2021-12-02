@@ -19,33 +19,31 @@ namespace ProcessScheduling.Scheduler.Policies
             QuantumClock = 0;
         }
 
-        public override bool UpdateProcessState(IList<ProcessEntryState> pResults)
+        public override bool UpdateProcessState(IList<ProcessEntryState> processes)
         {
             // Arrivos y Salidas
-            this.CheckNewToReady(pResults, config.OverheadTimeToAccept);
-            this.CheckRunningToLock(pResults);
-            this.CheckLockToReadyOrComplete(pResults, config.OverheadTimeToComplete);
+            this.CommonChecks(processes);
 
             // Salgo si termino la tanda.
-            if (pResults.All(p => p.ProcessState == ProcessStateEnum.Complete))
+            if (processes.All(p => p.ProcessState == ProcessStateEnum.Terminated))
             {
                 return true;
             }
 
             // RoundRobin es preemptivo. El proceso que aun corre puede interrumpirse
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Running))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Running))
             {
                 QuantumClock = QuantumClock >= config.Quantum ? 0 : QuantumClock + 1;
-                this.CheckRunningToReadyByQuantum(pResults, config.Quantum, QuantumClock);
+                this.CheckRunningToReadyByQuantum(processes, config.Quantum, QuantumClock);
             }
 
             // Si el proceso no fue interrumpido y sigue corriendo. Salgo
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Running))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Running))
             {
                 return true;
             }
 
-            if (pResults.Any(p => p.ProcessState == ProcessStateEnum.Ready))
+            if (processes.Any(p => p.ProcessState == ProcessStateEnum.Ready))
             {
                 // Hay procesos en espera o corriendo. El Scheduler se encuentra conmutando. 
                 CurrentExchangeTime++;
@@ -53,7 +51,7 @@ namespace ProcessScheduling.Scheduler.Policies
                 {
                     CurrentExchangeTime = 0;
                     QuantumClock = 0;
-                    this.CheckReadyToRunning(pResults);
+                    this.CheckReadyToRunning(processes);
                 }
             }
 
